@@ -233,12 +233,19 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     }
       
     func showPlayer() {
+        let playerBundleID = type(of: helper).BundleIdentifier
         let player = NSRunningApplication.runningApplications(
-            withBundleIdentifier: type(of: helper).BundleIdentifier
-            )[0]
+            withBundleIdentifier: playerBundleID
+        )[0]
         
-        // Takes to the player window
-        player.activate(options: .activateIgnoringOtherApps)
+        // Get the URL to the Player application
+        guard let playerApplicationBundleURL = player.bundleURL else {
+            print("The bundle URL for \(type(of: helper).BundleIdentifier) is nil, unable to launch the application.")
+            return
+        }
+        
+        // Bring the application to the foreground
+        NSWorkspace.shared.open(playerApplicationBundleURL)
     }
     
     // MARK: Player loading
