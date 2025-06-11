@@ -23,6 +23,10 @@ jobs:
         sudo gem install cocoapods
         pod install
 
+    - name: Install xcpretty
+      run: sudo gem install xcpretty
+
+
     - name: Build with xcodebuild (ad-hoc signing, verbose)
       run: |
         set -o pipefail && xcodebuild -workspace Muse.xcworkspace \
