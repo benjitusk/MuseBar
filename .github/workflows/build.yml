@@ -38,7 +38,8 @@ jobs:
         cp -R build/Build/Products/Release/Muse.app output/
 
     - name: Upload build artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: MuseApp
-        path: output/Muse.app
+        path: |
+          output/Muse.app
