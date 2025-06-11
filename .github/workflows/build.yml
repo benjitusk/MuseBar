@@ -23,17 +23,14 @@ jobs:
         sudo gem install cocoapods
         pod install
 
-    - name: List available schemes
-      run: xcodebuild -workspace Muse.xcworkspace -list
-
-    - name: Build with xcodebuild (no signing)
+    - name: Build with xcodebuild (ad-hoc signing)
       run: |
         xcodebuild -workspace Muse.xcworkspace \
                    -scheme "Muse Bar" \
                    -configuration Release \
                    -sdk macosx \
                    -derivedDataPath build \
-                   CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+                   CODE_SIGN_IDENTITY="-" CODE_SIGNING_REQUIRED=YES
 
     - name: Package .app bundle
       run: |
