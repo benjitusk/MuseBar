@@ -23,15 +23,22 @@ jobs:
         sudo gem install cocoapods
         pod install
 
-    - name: Build with xcodebuild (ad-hoc signing)
+    - name: Build with xcodebuild (ad-hoc signing, verbose)
       run: |
-        xcodebuild -workspace Muse.xcworkspace \
-                   -scheme "Muse Bar" \
-                   -configuration Release \
-                   -sdk macosx \
-                   -derivedDataPath build \
-                   CODE_SIGN_IDENTITY="-" CODE_SIGNING_REQUIRED=YES
+        set -o pipefail && xcodebuild -workspace Muse.xcworkspace \
+          -scheme "Muse Bar" \
+          -configuration Release \
+          -sdk macosx \
+          -derivedDataPath build \
+          CODE_SIGN_IDENTITY="-" CODE_SIGNING_REQUIRED=YES \
+        | tee build.log | xcpretty --color
 
+    - name: Upload build log
+      if: failure()
+      uses: actions/upload-artifact@v4
+      with:
+        name: build-log
+        path: build.log
     - name: Package .app bundle
       run: |
         mkdir -p output
