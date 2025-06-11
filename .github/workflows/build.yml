@@ -29,7 +29,7 @@ jobs:
     - name: Build with xcodebuild (no signing)
       run: |
         xcodebuild -workspace Muse.xcworkspace \
-                   -scheme Muse \
+                   -scheme "Muse Bar" \
                    -configuration Release \
                    -sdk macosx \
                    -derivedDataPath build \
